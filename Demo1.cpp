@@ -1,14 +1,74 @@
 //
 // Created by Yuecaizheng on 2020/11/27.
 //
-/** ç¤ºä¾‹ï¼šåˆ©ç”¨çº¿æ€§è¡¨çš„åŸºæœ¬è¿ç®—ï¼Œå®ç°å¦‚æœåœ¨çº¿æ€§è¡¨ Aä¸­å‡ºç°çš„å…ƒç´ ï¼Œåœ¨çº¿æ€§è¡¨ Bä¸­ä¹Ÿå‡ºç°ï¼Œåˆ™å°† Aä¸­çš„è¯¥å…ƒç´ åˆ é™¤ã€‚ */
-/** åˆ†æï¼šè¿™å…¶å®æ˜¯æ±‚ä¸¤ä¸ªè¡¨çš„å·®é›†ï¼Œå³ A-Bã€‚ä¾æ¬¡æ£€æŸ¥çº¿æ€§è¡¨ Bä¸­çš„æ¯ä¸ªå…ƒç´ ï¼Œå¦‚æœè¯¥å…ƒç´ åœ¨çº¿æ€§è¡¨ Aä¸­ä¹Ÿå‡ºç°ï¼Œåˆ™åœ¨ Aåˆ é™¤è¯¥å…ƒç´  */
+
+/** Ê¾Àı£ºÀûÓÃÏßĞÔ±íµÄ»ù±¾ÔËËã£¬ÊµÏÖÈç¹ûÔÚÏßĞÔ±í AÖĞ³öÏÖµÄÔªËØ£¬ÔÚÏßĞÔ±í BÖĞÒ²³öÏÖ£¬Ôò½« AÖĞµÄ¸ÃÔªËØÉ¾³ı¡£ */
+/** ·ÖÎö£ºÕâÆäÊµÊÇÇóÁ½¸ö±íµÄ²î¼¯£¬¼´ A-B¡£ÒÀ´Î¼ì²éÏßĞÔ±í BÖĞµÄÃ¿¸öÔªËØ£¬Èç¹û¸ÃÔªËØÔÚÏßĞÔ±í AÖĞÒ²³öÏÖ£¬ÔòÔÚ AÉ¾³ı¸ÃÔªËØ */
 #include "stdio.h"
-#include "SeqList.h"
-#define ListSize 100
+#include "main.cpp"
+
 typedef int DateType;
 
+/** Çó A-BµÄ²î¼¯Ëã·¨ÈçÏÂ  */
+/** Çó A-B ¼´ÔÚ AÖĞÒÀ´Î²éÕÒ BÖĞ¸÷ÔªËØ£¬Èô¸ÃÔªËØÔÚ AÖĞ³öÏÖ£¬ÔòÉ¾³ı */
+void DeleteElement(SeqList *A, SeqList B) {
+    int flag, pos;
+    DateType e;
+    for (int i = 1; i < B.length; ++i) {
+        flag = GetElement(B, i, &e);    //ÒÀ´Î°ÑBÖĞÃ¿¸öÔªËØÈ¡³ö¸øe
+        if (flag == 1) {
+            pos = LocateElement(*A, e);     //ÔÚAÖĞ²éÕÒÔªËØe
+            if (pos > 0)                    //Èç¹ûÔªËØ´æÔÚ
+                DeleteList(A, pos, &e);     //½«Æä´ÓAÖĞÉ¾³ı
+        }
+    }
+}
 
+/** ²âÊÔ³ÌĞòÈçÏÂ£º */
+void DeleteElement(SeqList *A, SeqList B);
 
+int main() {
+    int flag;
+    DateType e;
+    SeqList A, B;
+    InitList(&A);
+    InitList(&B);
+    for (int i = 1; i <= 10; i++) {
+        if (InsertList(&A, i, i + 10) == 0) {
+            printf("²åÈëÎ»ÖÃ²»ºÏ·¨1\n");
+            return 0;
+        }
+    }
+    for (int i = 1, j = 1; j <= 6; i = i + 2, j++) {
+        if (InsertList(&B, j, i * 2) == 0) {
+            printf("²åÈëÎ»ÖÃ²»ºÏ·¨2\n");
+            return 0;
+        }
+    }
+    printf("Ë³Ğò±íAÖĞµÄÔªËØ£º\n");
+    for (int i = 0; i < A.length; ++i) {
+        flag = GetElement(A, i, &e);
+        if (flag == 1)
+            printf("%4d", e);
+    }
+    printf("\n");
+    printf("Ë³Ğò±íBÖĞµÄÔªËØ£º\n");
+    for (int i = 0; i < B.length; ++i) {
+        flag = GetElement(B, i, &e);
+        if (flag == 1)
+            printf("%4d", e);
+    }
+    printf("\n");
+    printf("½«ÔÚAÖĞ³öÏÖBµÄÔªËØÉ¾³ıºó£¬AÖĞµÄÔªËØ£¨¼´A-B£©£º\n");
+    DeleteElement(&A, B);
+    for (int i = 0; i < A.length; ++i) {
+        flag = GetElement(A, i, &e);
+        if (flag == 1)
+            printf("%4d,", e);
+    }
+    ClearList(&A);
+    ClearList(&B);
+    printf("\n");
+}
 
 

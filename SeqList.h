@@ -6,13 +6,13 @@
 #ifndef DEMO5_LINEARLIST_SEQLIST_H
 #define DEMO5_LINEARLIST_SEQLIST_H
 
-#endif //DEMO5_LINEARLIST_SEQLIST_H
 
 /**         用数组来描述顺序表
  *          顺序表的结构体如下
  * */
 typedef int DataType;
-#define ListSize 100        //定义数组大小为100
+#define ListSize 150        //定义数组大小为150
+
 typedef struct {
     DataType list[ListSize];    //用list存储数据表中的数据元素
     int length;                 //表示顺序表当前的数据元素个数
@@ -21,14 +21,6 @@ typedef struct {
 /** 顺序表的初始化 */
 void InitList(SeqList *L) {
     L->length = 0;        //顺序表的长度置为0
-}
-
-/** 判断顺序表是否为空  */
-int ListEmpty(SeqList L) {
-    if (L.length == 0)        //如果顺序表长度为0
-        return 1;           //返回1
-    else                    //否则
-        return 0;           //返回0
 }
 
 /** 按序号查找操作。查找操作分为两种：按序号查找和按内容查找。按序号查找就是查找顺序表L中的第i个元素，如果找到将该元素赋值给e  */
@@ -48,9 +40,16 @@ int LocateElement(SeqList L, DataType e) {
             return i + 1;       //返回i+1
         return 0;
     }
+    return 0;
+}
+
+/** 判断顺序表是否为空  */
+int ListEmpty(SeqList L) {
+    if (L.length == 0)        //如果顺序表长度为0
+        return 1;           //返回1
+    else                    //否则
+        return 0;           //返回0
 }
 
 
-
-
-
+#endif //DEMO5_LINEARLIST_SEQLIST_H

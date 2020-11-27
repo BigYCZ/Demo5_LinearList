@@ -1,5 +1,7 @@
-#include <iostream>
+#include <stdio.h>
 #include "SeqList.h"
+
+/** 此源文件为原理分析 包含增加和删除 */
 
 /**********************************************************************************************************/
 
@@ -28,13 +30,11 @@ int InsertList(SeqList *L, int i, DataType e) {
         printf("顺序表已经满了，不能在插入新的元素\n");
         return 0;
     } else {
-        for (int j = L->length; j >= i; --j)    //将第i个位置以后的元素依次后移
-        {
+        for (int j = L->length; j >= i; j--)    //将第i个位置以后的元素依次后移
             L->list[j] = L->list[j - 1];    //数组中的值依次往后移动
             L->list[i - 1] = e;             //插入元素到第i个位置
             L->length = L->length + 1;      //顺序表长度增加1
             return 1;
-        }
     }
 }
 
@@ -71,11 +71,11 @@ int DeleteList(SeqList *L, int i, DataType *e) {
         return -1;
     } else {
         *e = L->list[i - 1];        //将要删除的元素给 *e
-        for (int j = i; j <= L->length - 1; ++j) {      //数组中的元素依次往前移动，直到覆盖掉需要删除指定位置的值
+        for (int j = i; j <= L->length - 1; j++)      //数组中的元素依次往前移动，直到覆盖掉需要删除指定位置的值
             L->list[j - 1] = L->list[j];            //将数组元素的值往前移动，数组下标的值相比于未删除的下标值 减1
             L->length = L->length - 1;          //数组长度减1
             return 1;
-        }
+
     }
 }
 
